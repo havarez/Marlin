@@ -1,104 +1,5 @@
-// CUSTOMIZE FOR YOUR MACHINE BELOW
-// CUSTOMIZE FOR YOUR MACHINE BELOW
-// CUSTOMIZE FOR YOUR MACHINE BELOW
-// CUSTOMIZE FOR YOUR MACHINE BELOW
-// CUSTOMIZE FOR YOUR MACHINE BELOW
-
-// Enable this is you have a raptor 2.
-// Selects pin file, runout sensor and stock TMC Drivers automatically
-#define RAPTOR2
-
-/**
- * Enable if you replace the stepper drivers with TMC 2208. Be sure to remove MS3 jumper
- * underneath the stepper driver! Plug and Play will result in Stealth Chop 2 Mode enabled
- * Stealthchop with 2208 on E will disabe Linear Advance! Please enable stealthchop if
- * you require Linear Advance with a TMC2208 on the extruder!
- * If you have used a UART connection to program the driver to SpreadCycle mode, pease seect that as well
- */
-//#define X_2208 // TMC2208 or 2209 in Standalone Mode
-//#define X_SpreadCycle
-//#define X_2209_Uart
-//#define Y_2208
-//#define Y_SpreadCycle // Highly recommended as large prints with high mass can cause layer shifts with stealthchop at high speed
-//#define Y_4988  // Some machines shipped with 4988 drivers across the board. Set this if you arent sure what you have and all the drivers look identical
-//#define Y_2209_Uart
-//#define Z_2208 // NOT Recommended! Dual stepper current draw is above the recommended limit for this driver
-//#define Z_SpreadCycle
-//#define Z_4988  // Some machines shipped with 4988 drivers across the board. Set this if you arent sure what you have and all the drivers look identical
-//#define Z_2209_Uart
-//#define E_2208 // Not Recommended! Stealthchop mode faults with linear advance
-//#define E_SpreadCycle
-//#define E_4988
-//#define E_2209_Uart
-
-
-//#define SKR13
-//#define SKR14
-//#define SKR14Turbo
-//#define SKRPRO11
-
-//#define I2C_EEPROM  // use I2C EEPROM on SRK PRO v1.1 e.g AT24C256
-//#define SKR14_PowerLossKit // Bigtreetech power loss kit for SKR14
-
-//#define DualZ // Uses 5th driver on SKR boards as Z2
-
-/**
- * Enable if you install a KEENOVO AC BED with Solid State Relay
- */
-#define BED_AC
-
-#define HotendAllMetal
-//#define HotendMosquito
-//#define ExtruderBMG
-
-/**
- * TM3D E3D Hemera Kit
- * Swap center 2 wires on extruder connector on Raptor 2
- *
- */
-
-#define E3DHemeraExtruder
-
-/**
- * Enable if you install a filament runout sensor from www.formbotusa.com
- */
-//#define RunoutSensor
-#define RunoutEncoder
-
-//#define tallVersion // For 700mm version
-
-/**
- * Enable if you wish to change the auto level strategy to Unified Bed Leveling. Under CUSTOM COMMANDS, run Step 1 and 2 before setting Z Offset
- */
-//#define UBL //Disabled Firmware Retract and the animated boot screen
-
-//ONLY MAKE CHANGES ABOVE FOR RELIABLE FUNCTION
-//ONLY MAKE CHANGES ABOVE FOR RELIABLE FUNCTION
-//ONLY MAKE CHANGES ABOVE FOR RELIABLE FUNCTION
-//ONLY MAKE CHANGES ABOVE FOR RELIABLE FUNCTION
-//ONLY MAKE CHANGES ABOVE FOR RELIABLE FUNCTION
-
-#if ENABLED(RAPTOR2)
-  #if DISABLED(X_2209_Uart)
-    #define X_2208
-  #endif
-  #if DISABLED(Y_2209_Uart)
-    #define Y_2208
-  #endif
-  #if DISABLED(Z_2209_Uart)
-    #define Z_2208
-  #endif
-  #if DISABLED(E_2209_Uart)
-    #define E_2208
-  #endif
-  #define RunoutSensor
-#endif
-
-#if ANY(SKR13, SKR14, SKR14Turbo, SKRPRO11)
-  #define SKRBoard
-#endif
-
-// ---------------------------------------------------------------
+#define Z_STEPSMM 800
+#define UBL
 
 /**
  * Marlin 3D Printer Firmware
@@ -206,22 +107,13 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#if ANY(SKR13, SKR14, SKR14Turbo, SKRPRO11)
-  #define SERIAL_PORT -1
-#else
-  #define SERIAL_PORT 0
-#endif
+ #define SERIAL_PORT 0
 
 /**
  * Select a secondary serial port on the board to use for communication with the host.
- * This allows the connection of wireless adapters (for instance) to non-default port pins.
- * Serial port -1 is the USB emulated serial port, if available.
- *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#if ANY(SKR13, SKR14, SKR14Turbo, SKRPRO11)
-  #define SERIAL_PORT_2 0
-#endif
+//#define SERIAL_PORT_2 -1
 
 /**
  * This setting determines the communication speed of the printer.
@@ -239,23 +131,11 @@
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #if ENABLED(SKR14Turbo)
-    #define MOTHERBOARD BOARD_BTT_SKR_V1_4_TURBO
-  #elif ENABLED(SKR14)
-    #define MOTHERBOARD BOARD_BTT_SKR_V1_4
-  #elif ENABLED(SKR13)
-    #define MOTHERBOARD BOARD_BTT_SKR_V1_3
-  #elif ENABLED(SKRPRO11)
-    #define MOTHERBOARD BOARD_BTT_SKR_PRO_V1_1
-  #elif ENABLED(RAPTOR2)
-    #define MOTHERBOARD BOARD_FORMBOT_RAPTOR2
-  #else
-    #define MOTHERBOARD BOARD_FORMBOT_RAPTOR
-  #endif
+  #define MOTHERBOARD BOARD_FORMBOT_RAPTOR2
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-//#define CUSTOM_MACHINE_NAME "TM3D RaPtOr"
+//#define CUSTOM_MACHINE_NAME "3D Printer"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like http://www.uuidgenerator.net/version4
@@ -528,15 +408,8 @@
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
-#if ENABLED(HotendMosquito)
-  #define TEMP_SENSOR_0 67
-#elif ENABLED(RAPTOR2)
-  #define TEMP_SENSOR_0 61
-#elif ENABLED(E3DHemeraExtruder)
-  #define TEMP_SENSOR_0 5
-#else
-  #define TEMP_SENSOR_0 1
-#endif
+
+#define TEMP_SENSOR_0 61
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -544,11 +417,7 @@
 #define TEMP_SENSOR_5 0
 #define TEMP_SENSOR_6 0
 #define TEMP_SENSOR_7 0
-#if(ENABLED(BED_AC))
-#define TEMP_SENSOR_BED 11
-#else
 #define TEMP_SENSOR_BED 1
-#endif
 #define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
 
@@ -584,13 +453,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#if ENABLED(HotendMosquito)
-  #define HEATER_0_MAXTEMP 450
-#elif ENABLED(RAPTOR2)
-  #define HEATER_0_MAXTEMP 345
-#else
-  #define HEATER_0_MAXTEMP 305
-#endif
+#define HEATER_0_MAXTEMP 350
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -598,11 +461,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-  #if(ENABLED(BED_AC))
-#define BED_MAXTEMP 165
-#else
-  #define BED_MAXTEMP 100
-#endif
+#define BED_MAXTEMP      150
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -628,19 +487,10 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #if ENABLED(E3DHemeraExtruder)
-    #define  DEFAULT_Kp 21.9
-    #define  DEFAULT_Ki 1.5
-    #define  DEFAULT_Kd 79.88
-  #elif ENABLED(HotendAllMetal)
-    #define  DEFAULT_Kp 21.9
-    #define  DEFAULT_Ki 1.5
-    #define  DEFAULT_Kd 79.88
-  #else
-    #define  DEFAULT_Kp 22.2
-    #define  DEFAULT_Ki 1.08
-    #define  DEFAULT_Kd 114
-  #endif
+  #define DEFAULT_Kp 22.2
+  #define DEFAULT_Ki 1.08
+  #define DEFAULT_Kd 114
+
   // MakerGear
   //#define DEFAULT_Kp 7.0
   //#define DEFAULT_Ki 0.1
@@ -688,15 +538,9 @@
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #if(ENABLED(BED_AC))
-    #define  DEFAULT_bedKp 100.0
-    #define  DEFAULT_bedKi 15.0
-    #define  DEFAULT_bedKd 200.0
-  #else
-    #define DEFAULT_bedKp 10.00
-    #define DEFAULT_bedKi .023
-    #define DEFAULT_bedKd 305.4
-  #endif
+  #define DEFAULT_bedKp 100.0
+  #define DEFAULT_bedKi 15.0
+  #define DEFAULT_bedKd 200.0
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
@@ -805,13 +649,13 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the probe.
+#define X_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define Z_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define Y_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define Z_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define Z_MIN_PROBE_ENDSTOP_INVERTING false // Set to true to invert the logic of the probe.
 
 /**
  * Stepper Drivers
@@ -829,48 +673,16 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#if ENABLED(X_2209_Uart)
-  #define X_DRIVER_TYPE  TMC2209
-  #define X2_DRIVER_TYPE TMC2209
-#elif ENABLED(X_2208)
-  #define X_DRIVER_TYPE  TMC2208_STANDALONE
-  #define X2_DRIVER_TYPE TMC2208_STANDALONE
-#else
-  #define X_DRIVER_TYPE  A4988
-  #define X2_DRIVER_TYPE A4988
-#endif
-#if ENABLED(Y_2209_Uart)
-  #define Y_DRIVER_TYPE  TMC2209
-#elif ENABLED(Y_2208)
-  #define Y_DRIVER_TYPE  TMC2208_STANDALONE
-#elif ENABLED(Y_4988)
-  #define Y_DRIVER_TYPE  A4988
-#else
-  #define Y_DRIVER_TYPE  DRV8825
-#endif
-#if ENABLED(Z_2209_Uart)
-  #define Z_DRIVER_TYPE  TMC2209
-#elif ENABLED(Z_2208)
-  #define Z_DRIVER_TYPE  TMC2208_STANDALONE
-#elif ENABLED(Z_4988)
-  #define Z_DRIVER_TYPE  A4988
-#else
-  #define Z_DRIVER_TYPE  DRV8825
-#endif
+#define X_DRIVER_TYPE  TMC2208_STANDALONE
+#define Y_DRIVER_TYPE  TMC2208_STANDALONE
+#define Z_DRIVER_TYPE  TMC2208_STANDALONE
+#define X2_DRIVER_TYPE TMC2208_STANDALONE
 //#define Y2_DRIVER_TYPE A4988
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
-#if ENABLED(E_2209_Uart)
-  #define E0_DRIVER_TYPE TMC2209
-  #define E1_DRIVER_TYPE TMC2209
-#elif ENABLED(E_2208)
-  #define E0_DRIVER_TYPE TMC2208_STANDALONE
-  #define E1_DRIVER_TYPE TMC2208_STANDALONE
-#else
-  #define E0_DRIVER_TYPE  DRV8825
-  #define E1_DRIVER_TYPE DRV8825
-#endif
+#define E0_DRIVER_TYPE TMC2208_STANDALONE
+//#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
@@ -921,33 +733,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#if ENABLED(E3DHemeraExtruder)
-  #if ANY(E_2208, E_4988, E_2209_Uart)
-    #define E_STEPSMM 409
-  #else
-    #define E_STEPSMM 818
-  #endif
-#else
-  #if ANY(E_2208, E_4988, E_2209_Uart)
-    #define E_STEPSMM 96
-  #else
-    #define E_STEPSMM 192
-  #endif
-#endif
-
-#if ANY(Y_2208, Y_4988, Y_2209_Uart)
-  #define Y_STEPSMM 80
-#else
-  #define Y_STEPSMM 160
-#endif
-
-#if ANY(Z_2208, Z_4988, Z_2209_Uart)
-  #define Z_STEPSMM 800
-#else
-  #define Z_STEPSMM 1600
-#endif
-
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, Y_STEPSMM, Z_STEPSMM, E_STEPSMM }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, Z_STEPSMM, 420 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -967,26 +753,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
- #if(ENABLED(X_2208))
-  #if(ENABLED(X_SpreadCycle))
-    #define x_accel 750
-  #else
-    #define x_accel 500
-  #endif
- #else
-  #define x_accel 750
- #endif
-
-  #if(ENABLED(Y_2208))
-  #if(ENABLED(Y_SpreadCycle))
-    #define y_accel 500
-  #else
-    #define y_accel 300
-  #endif
- #else
-  #define y_accel 500
- #endif
-#define DEFAULT_MAX_ACCELERATION      { x_accel, y_accel, 400, 4000 }
+#define DEFAULT_MAX_ACCELERATION      { 750, 500, 400, 4000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1192,27 +959,20 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#if ENABLED(E3DHemeraExtruder)
-  #define NOZZLE_TO_PROBE_OFFSET { -38, 0, 0 }
-#elif ENABLED(HotendMosquito)
-  #define NOZZLE_TO_PROBE_OFFSET { 35, 10, 0 }
-#else
-  #define NOZZLE_TO_PROBE_OFFSET { -22, 0, 0 }
-#endif
-
+#define NOZZLE_TO_PROBE_OFFSET { 36, 10, -1.2 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define MIN_PROBE_EDGE 8
+#define MIN_PROBE_EDGE 10
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 10000
+#define XY_PROBE_SPEED 8000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 2)
+#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW Z_PROBE_SPEED_FAST
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
 
 /**
  * Multiple Probing
@@ -1299,33 +1059,15 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
- #if ANY(X_2208, X_2209_Uart)
-  #define INVERT_X_DIR true
-#else
-  #define INVERT_X_DIR false
-#endif
-#if ANY(Y_2208, Y_2209_Uart)
-  #define INVERT_Y_DIR true
-#else
-  #define INVERT_Y_DIR false
-#endif
-#if ANY(Z_2208, Z_2209_Uart)
-  #define INVERT_Z_DIR false
-#else
-  #define INVERT_Z_DIR true
-#endif
-
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR true
+#define INVERT_Z_DIR false
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#if (ANY(E_2208, E_2209_Uart) && NONE(HotendMosquito, ExtruderBMG)) || (ANY(HotendMosquito, ExtruderBMG) && NONE(E_2208, E_2209_Uart))
-  #define INVERT_E0_DIR false
-  #define INVERT_E1_DIR true
-#else
-  #define INVERT_E0_DIR true
-  #define INVERT_E1_DIR false
-#endif
+#define INVERT_E0_DIR true
+#define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 #define INVERT_E4_DIR false
@@ -1339,7 +1081,7 @@
 
 //#define UNKNOWN_Z_NO_RAISE      // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+//#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
 //#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
@@ -1353,11 +1095,7 @@
 // @section machine
 
 // The size of the print bed
-#if ANY(RAPTOR2, E3DHemeraExtruder)
-  #define X_BED_SIZE 385
-#else
-  #define X_BED_SIZE 400
-#endif
+#define X_BED_SIZE 390
 #define Y_BED_SIZE 400
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
@@ -1366,11 +1104,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#if(ENABLED(tallVersion))
-  #define Z_MAX_POS 700
-#else
-  #define Z_MAX_POS 500
-#endif
+#define Z_MAX_POS 500
 
 /**
  * Software Endstops
@@ -1398,7 +1132,7 @@
 #endif
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
-  #define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
+  //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
 #endif
 
 /**
@@ -1409,17 +1143,10 @@
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  * By default the firmware assumes HIGH=FILAMENT PRESENT.
  */
- #if ANY(RunoutSensor, RunoutEncoder)
-  #define FILAMENT_RUNOUT_SENSOR
-#endif
+#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-  #if NONE(RAPTOR2, SKRBoard)
-    #define FIL_RUNOUT_PIN 57
-    #define FIL_RUNOUT_INVERTING true // set to true to invert the logic of the sensor.
-  #else
-    #define FIL_RUNOUT_INVERTING false // set to true to invert the logic of the sensor.
-  #endif
+  #define FIL_RUNOUT_INVERTING false // Set to true to invert the logic of the sensor.
   #define FIL_RUNOUT_PULLUP          // Use internal pullup for filament runout pins.
   //#define FIL_RUNOUT_PULLDOWN      // Use internal pulldown for filament runout pins.
 
@@ -1430,19 +1157,13 @@
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
   // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-  #if ENABLED(RunoutEncoder)
-    #define FILAMENT_RUNOUT_DISTANCE_MM 15
-  #else
-    #define FILAMENT_RUNOUT_DISTANCE_MM 5
-  #endif
+  #define FILAMENT_RUNOUT_DISTANCE_MM 5
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
     // Enable this option to use an encoder disc that toggles the runout pin
     // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
     // large enough to avoid false positives.)
-    #if ENABLED(RunoutEncoder)
-      #define FILAMENT_MOTION_SENSOR
-    #endif
+    //#define FILAMENT_MOTION_SENSOR
   #endif
 #endif
 
@@ -1486,12 +1207,11 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#if(ENABLED(UBL))
-  #define AUTO_BED_LEVELING_UBL
-#else
+#if DISABLED(UBL)
   #define AUTO_BED_LEVELING_BILINEAR
+#else
+  #define AUTO_BED_LEVELING_UBL
 #endif
-
 //#define MESH_BED_LEVELING
 
 /**
@@ -1524,10 +1244,10 @@
    */
   #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
-    #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
-    #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-    #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_NOZZLE_SIZE    1.4  // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_LAYER_HEIGHT   0.25  // (mm) Default layer height for the G26 Mesh Validation Tool.
+    #define MESH_TEST_HOTEND_TEMP  265    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_BED_TEMP      105    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
     #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
     #define G26_RETRACT_MULTIPLIER   1.0  // G26 Q (retraction) used by default between mesh test elements.
   #endif
@@ -1537,7 +1257,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 11
+  #define GRID_MAX_POINTS_X 10
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1567,16 +1287,16 @@
   //========================= Unified Bed Leveling ============================
   //===========================================================================
 
-  #define MESH_EDIT_GFX_OVERLAY      // Display a graphics overlay while editing the mesh
+  //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 5              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 15      // Don't use more than 15 points per axis, implementation limited.
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
 
-  #define UBL_Z_RAISE_WHEN_OFF_MESH 0.0 // When the nozzle is off the mesh, this value is used
+  //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
 
 #elif ENABLED(MESH_BED_LEVELING)
@@ -1606,13 +1326,13 @@
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
-#define LEVEL_BED_CORNERS
+//#define LEVEL_BED_CORNERS
 
 #if ENABLED(LEVEL_BED_CORNERS)
   #define LEVEL_CORNERS_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
   #define LEVEL_CORNERS_HEIGHT      0.0   // (mm) Z height of nozzle at leveling points
   #define LEVEL_CORNERS_Z_HOP       4.0   // (mm) Z height of nozzle between leveling points
-  #define LEVEL_CENTER_TOO              // Move to the center after the last corner
+  //#define LEVEL_CENTER_TOO              // Move to the center after the last corner
 #endif
 
 /**
@@ -1731,8 +1451,9 @@
 #define EEPROM_SETTINGS     // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
+#define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
-  #define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
+  //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
 #endif
 
 //
@@ -1758,14 +1479,14 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_LABEL       "PLA"
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED     70
+#define PREHEAT_1_LABEL       "PC"
+#define PREHEAT_1_TEMP_HOTEND 320
+#define PREHEAT_1_TEMP_BED     140
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "ABS"
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_TEMP_HOTEND 265
+#define PREHEAT_2_TEMP_BED    105
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
@@ -1782,10 +1503,10 @@
 #define NOZZLE_PARK_FEATURE
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
-  // Specify a park position as { X, Y, Z }
-  #define NOZZLE_PARK_POINT { 10, 10, 20}
-  #define NOZZLE_PARK_XY_FEEDRATE 70   // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
-  #define NOZZLE_PARK_Z_FEEDRATE 5      // Z axis feedrate in mm/s (not used for delta printers)
+  // Specify a park position as { X, Y, Z_raise }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_XY_FEEDRATE 100   // (mm/s) X and Y axes feedrate (also used for delta Z axis)
+  #define NOZZLE_PARK_Z_FEEDRATE 5      // (mm/s) Z axis feedrate (not used for delta printers)
 #endif
 
 /**
@@ -2029,7 +1750,7 @@
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-#define SPEAKER
+//#define SPEAKER
 
 //
 // The duration and frequency for the UI feedback sound.
