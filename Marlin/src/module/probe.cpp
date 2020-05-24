@@ -606,6 +606,13 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
         || (sanity_check && current_position.z > -offset.z + _MAX(Z_CLEARANCE_MULTI_PROBE, 4) / 2)  // Probe triggered too high?
       ) {
         if (DEBUGGING(LEVELING)) {
+
+          if (current_position.z > -offset.z + _MAX(Z_CLEARANCE_MULTI_PROBE, 4) / 2) {
+            DEBUG_ECHOLNPGM(" *** CLEARENCE ERROR ");
+            DEBUG_ECHOLNPAIR(" *** current_position.z: ", current_position.z);
+            DEBUG_ECHOLNPAIR(" *** clearence: ", -offset.z + _MAX(Z_CLEARANCE_MULTI_PROBE, 4) / 2);
+          }
+          
           DEBUG_ECHOLNPGM("SLOW Probe fail!");
           DEBUG_POS("<<< run_z_probe", current_position);
         }
