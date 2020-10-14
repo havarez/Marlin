@@ -62,20 +62,3 @@ On the stepper, one coil is A+ and A-, the other coil is B+ and B-.
 A possible wiring is A+ to 1A, A- to 1B and B+ to 2A and B- to 2B, but there are 15 other possibilities. 
 The only "wrong" way is one that connects a coil of the stepper to two different coil outputs on the RAMPS 
 (so connecting, for instance, A+ to 1A and A- to 2A wouldn't work)
-
-
-// -------- TODO
-
-UBL bed leveling + AUTO_BED_LEVELING_3POINT
-
-fillament runout + NOZZLE_PARK_FEATURE + ADVANCED_PAUSE_FEATURE
-
-NUM_Z_STEPPER_DRIVERS 2 + Z_STEPPER_AUTO_ALIGN
-
-ADAPTIVE_STEP_SMOOTHING ??? for SKR
-
-POWER_LOSS_RECOVERY
-
-LIN_ADVANCE (Calculate from Sorkin video)
-
-CUSTOM_USER_MENUS setup
