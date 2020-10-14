@@ -53,3 +53,20 @@ Do a G29 to probe the bed until the point of failure.
 18 gauge wire - 7 amps
 20 gauge wire - 3 amps (or slightly more)
 22 gauge wire - 2 amps
+
+
+// -------- TODO
+
+UBL bed leveling + AUTO_BED_LEVELING_3POINT
+
+fillament runout + NOZZLE_PARK_FEATURE + ADVANCED_PAUSE_FEATURE
+
+NUM_Z_STEPPER_DRIVERS 2 + Z_STEPPER_AUTO_ALIGN
+
+ADAPTIVE_STEP_SMOOTHING ??? for SKR
+
+POWER_LOSS_RECOVERY
+
+LIN_ADVANCE (Calculate from Sorkin video)
+
+CUSTOM_USER_MENUS setup
