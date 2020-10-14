@@ -54,6 +54,15 @@ Do a G29 to probe the bed until the point of failure.
 20 gauge wire - 3 amps (or slightly more)
 22 gauge wire - 2 amps
 
+STEPPER CONNECT
+// ------------
+
+On RAMPS, one coil should connect to 1A and 1B, whereas the other coil should connect to 2A and 2B.
+On the stepper, one coil is A+ and A-, the other coil is B+ and B-.
+A possible wiring is A+ to 1A, A- to 1B and B+ to 2A and B- to 2B, but there are 15 other possibilities. 
+The only "wrong" way is one that connects a coil of the stepper to two different coil outputs on the RAMPS 
+(so connecting, for instance, A+ to 1A and A- to 2A wouldn't work)
+
 
 // -------- TODO
 
