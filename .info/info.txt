@@ -1,0 +1,55 @@
+SuperVolcano
+
+Maximum nominal volumetric throughput = 6600 mm3/min (1.4 mm nozzle)
+6013 mm3/min = 2500 mm of filament = 41.6 mm/sec
+
+Wait until the temperature displayed is below 50°C before switching off the machine
+
+Hot tighten - max temp and 3nm of torque
+
+---
+
+layer w3.7  h0.2
+speed 30mm/sec = volume 22 mm3/sec = 1320 mm3/min
+
+
+---
+
+OPTIMAL
+ABS 70-90 chamber 90-100 bed 240-250 extruder
+(bed: 110-120 first two layers - then down to 95)
+
+---
+
+стол 100 - екструдер 250
+
+20 min - 47 камера - 244 нозл
+40 min - 58 камера - 245 нозл
+1h - 63-60-56-58 камера - 246 нозл
+2h - 67-64-62-60  камера- 246 нозл
+
+---
+
+DRYING (silica gel indicator)
+
+120-130 deg 2 hours (max 140 deg)
+
+activity
+20 - 100%
+35 - 89%
+50 - 71%
+55 - 57%
+
+
+DEBUG
+----------
+Download Marlin bugfix-2.0.x to test with the latest code.
+Enable DEBUG_LEVELING_FEATURE and M114_DETAIL and re-flash the firmware.
+Issue the command M111 S247 to enable maximum logging.
+Perform a G28 to do your standard homing procedure.
+Do a G29 to probe the bed until the point of failure.
+
+
+18 gauge wire - 7 amps
+20 gauge wire - 3 amps (or slightly more)
+22 gauge wire - 2 amps
