@@ -19,6 +19,9 @@ OPTIMAL
 ABS 70-90 chamber 90-100 bed 240-250 extruder
 (bed: 110-120 first two layers - then down to 95)
 
+AON3D - recomendations
+https://docs.aon3d.com/materials/pc/
+
 ---
 
 стол 100 - екструдер 250
