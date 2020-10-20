@@ -43,6 +43,11 @@ activity
 50 - 71%
 55 - 57%
 
+EXTRUDE
+
+G92 E0          Reset the extruder's origin
+G1 F300 E100    Extrude 3 millimetres of filament
+G92 E0          Reset the extruder's origin
 
 DEBUG
 ----------
