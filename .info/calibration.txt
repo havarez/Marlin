@@ -1,0 +1,26 @@
+5.00 - [set] chamber 80
+5.36 - chamber stable 80 bed 79 (TC bed 81-82, chamber near bed 84)
+5.45 - chamber 80 bed 77 (TC same as bow)
+water in 40.2 out 37
+
+5.50 - [set] nozzle 265 bed 100
+5.55 - stable temp (TC bed 101-105, chamber 88, nozzle 254)
+
+nozzle set 270 - real 256
+nozzle set 275 - real 263
+nozzle set 280 - real 267.5
+bed set 97 - real  edge 97 center 100
+water in 41 out 38
+
+// -------------------
+
+nozzle PID 270 (80 chamber 97 bed)
+#define DEFAULT_Kp 23.92
+#define DEFAULT_Ki 1.37
+#define DEFAULT_Kd 104.18
+
+
+bed PID 97 (80 chamber 270 nozzle)
+#define DEFAULT_bedKp 108.04
+#define DEFAULT_bedKi 16.59
+#define DEFAULT_bedKd 468.99
